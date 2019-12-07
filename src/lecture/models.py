@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from user.models import LectureUser
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
@@ -16,14 +18,25 @@ class Lecture(models.Model):
         return reverse("products:product-detail", kwargs={"id": self.id}) #f"/products/{self.id}/"
 
     def __str__(self):
-        result = self.title
-        result += "\nLecturer: " + self.lecturer
-        result += '\nLecturer intro: ' + self.lecturer_introduction
-        result += '\nIntroduction: ' + self.introduction
-        result += '\nCapacity: ' + str(self.capacity)
-        result += '\nLocation: ' + self.lecture_location
-        result = result.replace('\n','<br/>')
-        return result
+        return self.title
 
 
+class AttendanceLog(models.Model):
+    lecture = models.OneToOneField(Lecture, on_delete=models.CASCADE)
+    student = models.OneToOneField(LectureUser, on_delete=models.CASCADE)
+    didAttend = models.BooleanField('Attendance', default=False)
 
+    def __str__(self):
+        return self.lecture.title + ": " + self.student.username
+
+
+class DrawResult(models.Model):
+    lecture = models.OneToOneField(Lecture, on_delete=models.CASCADE)
+    student = models.OneToOneField(LectureUser, on_delete=models.CASCADE)
+
+    class Status(models.TextChoices):
+        PENDING = 'PEN',_('Pending')
+        WIN = 'WIN',_("Win")
+        MISSED = 'MIS',_('Missed')
+
+    draw_staus = models.CharField(max_length=3,choices=Status.choices,default=Status.PENDING)

@@ -10,6 +10,9 @@ class Class(models.Model):
     major = models.CharField(max_length=100)
     class_number = models.CharField(max_length=50)
 
+    def __str__(self):
+        return str(self.grade) + "级" + self.major + self.class_number + "班"
+
 
 class LectureUser(AbstractUser):
     student_id = models.IntegerField(null=False, blank=False, unique=True, primary_key=True)
@@ -17,7 +20,6 @@ class LectureUser(AbstractUser):
     USERNAME_FIELD = 'student_id'
     objects = CustomUserManager()
     student_class = models.ForeignKey(Class, on_delete=models.CASCADE, null=True)
+
     def __str__(self):
         return str(self.student_id) + " " + self.username
-
-
