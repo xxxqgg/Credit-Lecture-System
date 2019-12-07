@@ -11,12 +11,13 @@ class Class(models.Model):
     class_number = models.CharField(max_length=50)
 
 
-class User(AbstractUser):
-    email = models.EmailField(_('email address'), blank=True)
-    objects = CustomUserManager
-    student_class = models.ForeignKey(Class, on_delete=models.CASCADE)
-
-
-
+class LectureUser(AbstractUser):
+    student_id = models.IntegerField(null=False, blank=False, unique=True, primary_key=True)
+    email = models.EmailField(_('email address'))
+    USERNAME_FIELD = 'student_id'
+    objects = CustomUserManager()
+    student_class = models.ForeignKey(Class, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return str(self.student_id) + " " + self.username
 
 

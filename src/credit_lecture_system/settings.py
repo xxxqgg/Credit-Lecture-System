@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     # own app
     'lecture',
-    # 'user',
+    'user',
 ]
-
+AUTH_USER_MODEL = 'user.LectureUser'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
