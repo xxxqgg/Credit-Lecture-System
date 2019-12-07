@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if lectures %}
+    {% for lecture in lectures %}
+        {% autoescape off %}
+            <h3> Lecture {{ forloop.counter }}</h3>
+            <p>{{ lecture }}</p>
+        {% endautoescape %}
+    {% endfor %}
+{% else %}
+    <p>No lecture to be shown.</p>
+    <br/>
+    <a href="create" >Please add one</a>
+{% endif %}
+{% endblock %}
