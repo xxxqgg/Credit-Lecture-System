@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if lecture %}
+    {% autoescape off %}
+    <h3>{{ lecture.title }}</h3>
+    <p>{{ lecture.lecture_time }}</p>
+    <br>
+    <p>{{ lecture.introduction }}</p>
+    {% endautoescape %}
+{% else %}
+    <p>No lecture to be shown.</p>
+    <br/>
+{% endif %}
+{% endblock %}

@@ -1,9 +1,10 @@
 from django.urls import path,include
-from .views import (index_view,
-                    lecture_create_view,
-                    detail_view,
-                    LectureViewSet,
-                    )
+from .views import (
+    index_view,
+    lecture_create_view,
+    detail_view,
+    LectureViewSet,
+    )
 from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'', LectureViewSet)

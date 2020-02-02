@@ -4,8 +4,9 @@ from .models import *
 from .forms import LectureForm
 from rest_framework import viewsets
 from .serializers import LectureSerializer
-# Create your views here.
 
+
+# Create your views here.
 class LectureViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -23,8 +24,12 @@ def index_view(request):
 
 
 def detail_view(request, id):
-    obj = get_object_or_404(Lecture,id=id)
-    return HttpResponse(obj)
+    lecture = get_object_or_404(Lecture, id=id)
+    context = {
+        'lecture': lecture
+    }
+
+    return render(request, 'lecture_detail.html', context)
 
 
 def lecture_create_view(request):

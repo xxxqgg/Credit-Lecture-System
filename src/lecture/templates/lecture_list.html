@@ -3,10 +3,12 @@
 {% if lectures %}
     {% for lecture in lectures %}
         {% autoescape off %}
-            <h3> Lecture {{ forloop.counter }}</h3>
+            <a href="{{ forloop.counter }}"><h3> Lecture {{ forloop.counter }}</h3></a>
             <p>{{ lecture }}</p>
         {% endautoescape %}
     {% endfor %}
+
+    <a href="create">Create A Lecture</a>
 {% else %}
     <p>No lecture to be shown.</p>
     <br/>
