@@ -54,7 +54,7 @@
           <li><a href="maps.html"><i class="fa fa-map-marker"></i>Maps</a></li>
           <li><a href="tables.html"><i class="fa fa-users"></i>Manage Users</a></li>
           <li><a href="preferences.html"><i class="fa fa-cog"></i>Preferences</a></li>
-          <li><a href="javascript:;" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+          <li><a href="{% url 'user:signout' %}" data-toggle="modal" data-target="#confirmModal">Sign Out</a></li>
         </ul>
       </div><!--/.navbar-collapse -->
 
