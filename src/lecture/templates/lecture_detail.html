@@ -1,12 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="../">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Lecture Detail</li>
+  </ol>
+</nav>
 {% if lecture %}
     {% autoescape off %}
-    <h3>{{ lecture.title }}</h3>
-    <p>{{ lecture.lecture_time }}</p>
-    <br>
-    <p>{{ lecture.introduction }}</p>
+        <div class="jumbotron container-fluid">
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-3">
+            <h4>{{ lecture.id }}{{ lecture.title }}</h4>
+            <p class="text-left">
+            Time: {{ lecture.lecture_time }} <br/>
+            Introduction: {{ lecture.introduction }} <br/>
+            Capacity: {{ lecture.capacity }}<br/>
+{#            TODO: Show how many person have already signed up for the lecture.#}
+            Location: {{ lecture.lecture_location }}<br/>
+            Lecturer: {{ lecture.lecturer }}<br/>
+            Lecturer Introduction: {{ lecture.lecturer_intoduction }} <br/>
+        </p>
+        </div>
+        </div>
+        <form method="post" action="{% url 'lecture:signup' %}"> {% csrf_token %}
+            <input type="hidden" name="lecture_id" id="{{ lecture.id }}"  value="{{ lecture.id }}">
+            <input type="submit" class="btn btn-primary center-block" value="SIGNUP">
+        </form>
+
     {% endautoescape %}
 {% else %}
     <p>No lecture to be shown.</p>

@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
 # Create your models here.
 
+
 class Class(models.Model):
     grade = models.IntegerField(default=datetime.now().year + 3)
     major = models.CharField(max_length=100)

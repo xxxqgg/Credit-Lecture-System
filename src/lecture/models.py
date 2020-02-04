@@ -22,6 +22,7 @@ class Lecture(models.Model):
 
 
 class AttendanceLog(models.Model):
+
     lecture = models.OneToOneField(Lecture, on_delete=models.CASCADE)
     student = models.OneToOneField(LectureUser, on_delete=models.CASCADE)
     didAttend = models.BooleanField('Attendance', default=False)
@@ -31,12 +32,12 @@ class AttendanceLog(models.Model):
 
 
 class DrawResult(models.Model):
-    lecture = models.OneToOneField(Lecture, on_delete=models.CASCADE)
-    student = models.OneToOneField(LectureUser, on_delete=models.CASCADE)
+    id = models.IntegerField('id',primary_key=True)
+    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE,unique=False,primary_key=False)
+    student = models.ForeignKey(LectureUser, on_delete=models.CASCADE,unique=False,primary_key=False)
 
     class Status(models.TextChoices):
         PENDING = 'PEN',_('Pending')
         WIN = 'WIN',_("Win")
         MISSED = 'MIS',_('Missed')
-
-    draw_staus = models.CharField(max_length=3,choices=Status.choices,default=Status.PENDING)
+    draw_staus = models.CharField(max_length=3, choices=Status.choices, default=Status.PENDING, null=False)

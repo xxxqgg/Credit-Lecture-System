@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import LectureForm
@@ -25,6 +25,7 @@ def index_view(request):
 
 def detail_view(request, id):
     lecture = get_object_or_404(Lecture, id=id)
+
     context = {
         'lecture': lecture
     }
@@ -42,3 +43,20 @@ def lecture_create_view(request):
         'form': form
     }
     return render(request, 'lecture_create.html', context)
+
+
+def lecture_signup_view(request):
+    if request.user.is_anonymous:
+        return redirect('login')
+    try:
+        id = request.POST['lecture_id']
+        lecture = get_object_or_404(Lecture, pk=id)
+    except KeyError:
+        redirect('')
+
+    else:
+        record = DrawResult()
+        record.lecture = lecture
+        record.student = request.user
+        record.save()
+        return redirect('user:index')

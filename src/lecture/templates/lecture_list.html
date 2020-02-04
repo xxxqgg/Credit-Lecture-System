@@ -1,14 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+      </ol>
+    </nav>
 {% if lectures %}
+    <div class="container-fluid">
+    <div class="row row-cols-4">
+    <div class="panel-group">
     {% for lecture in lectures %}
+
         {% autoescape off %}
-            <a href="{{ forloop.counter }}"><h3> Lecture {{ forloop.counter }}</h3></a>
-            <p>{{ lecture }}</p>
+        <div class="col-sm-3">
+            <div class="panel panel-default main-panel">
+
+                <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a href="{% url 'lecture:detail' forloop.counter %}">
+                          Lecture {{ forloop.counter }}
+                        </a>
+                      </h4>
+                </div>
+            <div class="collapse panel-collapse in">
+                <div class="panel-body">
+                    {{ lecture }}
+                </div>
+            </div>
+            </div>
+        </div>
+
+
         {% endautoescape %}
     {% endfor %}
+    </div>
+    </div>
 
-    <a href="create">Create A Lecture</a>
+
+    <a href="create" class="btn btn-primary">Create A Lecture</a>
+    </div>
 {% else %}
     <p>No lecture to be shown.</p>
     <br/>
