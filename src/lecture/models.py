@@ -32,7 +32,7 @@ class AttendanceLog(models.Model):
 
 
 class DrawResult(models.Model):
-    id = models.IntegerField('id',primary_key=True)
+    id = models.IntegerField('id', primary_key=True)
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE,unique=False,primary_key=False)
     student = models.ForeignKey(LectureUser, on_delete=models.CASCADE,unique=False,primary_key=False)
 
@@ -40,4 +40,4 @@ class DrawResult(models.Model):
         PENDING = 'PEN',_('Pending')
         WIN = 'WIN',_("Win")
         MISSED = 'MIS',_('Missed')
-    draw_staus = models.CharField(max_length=3, choices=Status.choices, default=Status.PENDING, null=False)
+    draw_status = models.CharField(max_length=3, choices=Status.choices, default=Status.PENDING, null=False)

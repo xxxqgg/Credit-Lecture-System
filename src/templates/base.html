@@ -1,79 +1,139 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html>
+
 <head>
-    {% load static %}
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Credit Lecture System</title>
-{#    TODO: Move Static bootstrap files locally#}
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static './css/main.css' %}">
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 </head>
-<body >
 
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="h-100">
+            <div class="sidebar-header">
+                <h3>学分讲座系统</h3>
+            </div>
 
-    <div class="navbar navbar-inverse" role="navigation">
-      <div class="navbar-header">
-        <div class="logo"><h1><a href="../../lecture/">学分讲座系统</a></h1></div>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-    </div>
-
-    <div style="background-color: white">
-    <div class="navbar-collapse collapse templatemo-sidebar">
-        <ul class="templatemo-sidebar-menu">
-          <li>
-            <form class="navbar-form">
-              <input type="text" class="form-control" id="templatemo_search_box" placeholder="Search...">
-              <span class="btn btn-default">Go</span>
-            </form>
-          </li>
-          <li class="active"><a href="#"><i class="fa fa-home"></i>Dashboard</a></li>
-          <li class="sub open">
-            <a href="javascript:;">
-              <i class="fa fa-database"></i> Nested Menu <div class="pull-right"><span class="caret"></span></div>
-            </a>
-            <ul class="templatemo-submenu">
-              <li><a href="#">Aenean</a></li>
-              <li><a href="#">Pellentesque</a></li>
-              <li><a href="#">Congue</a></li>
-              <li><a href="#">Interdum</a></li>
-              <li><a href="#">Facilisi</a></li>
+            <ul class="list-unstyled components">
+                <p>菜单</p>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="{% url 'lecture:index' %}">讲座</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
             </ul>
-          </li>
-          <li><a href="data-visualization.html"><i class="fa fa-cubes"></i>Data Visualization</a></li>
-          <li><a href="maps.html"><i class="fa fa-map-marker"></i>Maps</a></li>
-          <li><a href="tables.html"><i class="fa fa-users"></i>Manage Users</a></li>
-          <li><a href="preferences.html"><i class="fa fa-cog"></i>Preferences</a></li>
-          <li><a href="{% url 'user:signout' %}" data-toggle="modal" data-target="#confirmModal">Sign Out</a></li>
-        </ul>
-      </div><!--/.navbar-collapse -->
 
-    <div class="templatemo-content-wrapper">
-    <div class="templatemo-content">
-        {% block content %}
-        To Be Replaced
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                </li>
+            </ul>
+        </nav>
 
-        {% endblock %}
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>菜单</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">我的课程</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{% url 'user:signout' %}">退出</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{% url 'user:login' %}">登陆</a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid h-100 w-100">
+                {% block content %}
+                    Replace content
+                {% endblock %}
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
 
+    {#    JQuert#}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
 
+    <!-- Popper.JS -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.js' %}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-    <script src="{% static './js/jquery.min.js' %}"></script>
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    </body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+</body>
+
 </html>
