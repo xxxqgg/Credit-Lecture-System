@@ -19,9 +19,9 @@
 </head>
 
 <body>
-    <div class="wrapper">
+    <div class="wrapper container-fluid">
         <!-- Sidebar  -->
-        <nav id="sidebar" class="h-100">
+        <nav id="sidebar" class="col">
             <div class="sidebar-header">
                 <h3>学分讲座系统</h3>
             </div>
@@ -78,7 +78,7 @@
         </nav>
 
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content" class="col">
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
@@ -95,7 +95,7 @@
                         <ul class="nav navbar-nav ml-auto">
                             {% if request.user.is_authenticated %}
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#">我的课程</a>
+                                    <a class="nav-link" href="{% url 'user:index' %}">我的课程</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{% url 'user:signout' %}">退出</a>
@@ -111,7 +111,13 @@
                 </div>
             </nav>
 
-            <div class="container-fluid h-100 w-100">
+            <div class="container-fluid">
+            <ol class="breadcrumb">
+
+                {% block breadcrumb %}
+                    Replace breadcrumb
+                {% endblock %}
+            </ol>
                 {% block content %}
                     Replace content
                 {% endblock %}

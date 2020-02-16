@@ -15,6 +15,5 @@ urlpatterns = [
     path('api', include(router.urls)),
     path('<int:id>/', detail_view,name='detail'),
     path('create',lecture_create_view,name='create'),
-    path('lecture_signup', lecture_signup_view,name='signup'),
-
+    path('<int:lecture_id>/signup/', lecture_signup_view,name='signup'),
 ]

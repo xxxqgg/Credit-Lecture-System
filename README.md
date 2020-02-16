@@ -10,11 +10,12 @@ Under construction
 - [x] Customize the User model. 
 - [x] Login page
 - [ ] Sign Up page( Later )
-- [ ] User model has certain bug while accessing form the admin site. 
+- [x] User model has certain bug while accessing form the admin site. 
 Take a look at [this document](https://docs.djangoproject.com/en/2.2/topics/auth/customizing/) and fix the bugs.
+- [ ] Add lectures via file upload.
 - [ ] Admin view on Draw and draw function
 - [ ] Add cron job to this project to support Draw features in Lecture model
-- [] Do authentication first before any other action.
+- [x] Do authentication first before any other action.
 - [x] Add bootstrap support for this project.
 - [ ] Learn about SZU unified identify api and how to use it.
 - [ ] Enable importing User and other model with excel files.

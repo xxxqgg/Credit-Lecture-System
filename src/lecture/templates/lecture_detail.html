@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'lecture:index' %}">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="#">Detail</a>
+    </li>
+{% endblock %}
+
 {% block content %}
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="../">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Lecture Detail</li>
-  </ol>
-</nav>
+
 {% if lecture %}
     {% autoescape off %}
         <div class="jumbotron container-fluid">
-        <div class="col-md-3">
-
-        </div>
-
         <div class="col-md-3">
             <h4>{{ lecture.id }}{{ lecture.title }}</h4>
             <p class="text-left">
@@ -26,7 +26,7 @@
         </p>
         </div>
         </div>
-        <form method="post" action="{% url 'lecture:signup' %}"> {% csrf_token %}
+        <form method="post" action="{% url 'lecture:signup' lecture.id %}"> {% csrf_token %}
             <input type="hidden" name="lecture_id" id="{{ lecture.id }}"  value="{{ lecture.id }}">
             <input type="submit" class="btn btn-primary center-block" value="SIGNUP">
         </form>

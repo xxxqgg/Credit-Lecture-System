@@ -4,6 +4,7 @@ from .models import *
 from .forms import LectureForm
 from rest_framework import viewsets
 from .serializers import LectureSerializer
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -45,18 +46,16 @@ def lecture_create_view(request):
     return render(request, 'lecture_create.html', context)
 
 
-def lecture_signup_view(request):
+def lecture_signup_view(request, lecture_id):
     if request.user.is_anonymous:
         return redirect('login')
+    lecture = get_object_or_404(Lecture, pk=lecture_id)
+    record = DrawResult()
+    record.lecture = lecture
+    record.student = request.user
     try:
-        id = request.POST['lecture_id']
-        lecture = get_object_or_404(Lecture, pk=id)
-    except KeyError:
-        redirect('')
-
-    else:
-        record = DrawResult()
-        record.lecture = lecture
-        record.student = request.user
         record.save()
-        return redirect('user:index')
+    except IntegrityError:
+        return redirect('lecture:index')
+
+    return redirect('user:index')

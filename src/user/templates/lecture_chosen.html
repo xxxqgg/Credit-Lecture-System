@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 {% block breadcrumb %}
     <li class="breadcrumb-item">
-        <a class="nav-link" href="{% url 'lecture:index' %}">Home</a>
-
+        <a href="{% url 'lecture:index' %}">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="#">我的选课</a>
     </li>
 
 {% endblock %}
 {% block content %}
-{% if lectures %}
+{% if results %}
     <div class="col-12">
     <div class="row card-columns">
-    {% for lecture in lectures %}
+
+    {% for result in results %}
+        {% with lecture=result.lecture %}
         {% autoescape off %}
         <div class="col-lg-3 col-md-12 m-auto">
             <div class="card">
             <div class="card-body">
               <h5 class="card-title">
-                <a href="{% url 'lecture:detail' lecture.id %}">
+                <a href="{% url 'lecture:detail' result.lecture.id %}">
                   <u>{{ lecture.title }}</u>
                 </a>
               </h5>
@@ -29,6 +33,9 @@
                         {{ lecture.lecturer_introduction }}
                     </li>
                     <li class="list-group-item">选课人数: {{ lecture.get_number_of_selected }}/{{ lecture.capacity }}</li>
+                    <li class="list-group-item text-info">
+                        抽选状态: {{ result.get_status }}
+                    </li>
                     <li class="list-group-item">
                         {% if request.user.is_staff %}
                             <div class="btn-group">
@@ -37,7 +44,10 @@
                                 <button href="" class="btn btn-info m-auto">抽选</button>
                             </div>
                         {% else %}
-                            <a href="{% url 'lecture:signup' lecture.id %}" class="btn btn-primary m-auto">报名</a>
+                            {% if lecture.did_draw %}
+                            {% else %}
+                                <button href="" class="btn btn-primary m-auto">退选</button>
+                            {% endif %}
                         {% endif %}
                     </li>
                 </ul>
@@ -47,14 +57,17 @@
 
 
         {% endautoescape %}
+        {% endwith %}
     {% endfor %}
+
     </div>
-
-
     {% if request.user.is_staff %}
         <a href="create" class="btn btn-primary">Create A Lecture</a>
     {% endif %}
     </div>
+
 {% else %}
+
 {% endif %}
+
 {% endblock %}
