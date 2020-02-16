@@ -66,3 +66,6 @@ class DrawResult(models.Model):
             return "等待抽选"
         else:
             raise KeyError
+
+    def __str__(self):
+        return str(self.lecture) + '-' + str(self.student) + '-' + self.get_status()
