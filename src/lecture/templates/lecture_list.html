@@ -9,10 +9,10 @@
 {% block content %}
 {% if lectures %}
     <div class="col-12">
-    <div class="row card-columns">
+    <div class="row ">
     {% for lecture in lectures %}
         {% autoescape off %}
-        <div class="col-lg-3 col-md-12 m-auto">
+        <div class="col-lg-4 col-md-12 mb-3">
             <div class="card">
             <div class="card-body">
               <h5 class="card-title">
@@ -21,6 +21,7 @@
                 </a>
               </h5>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item">简介： {{ lecture.introduction }}</li>
                     <li class="list-group-item">时间: {{ lecture.lecture_time }}</li>
                     <li class="list-group-item">地点: {{ lecture.lecture_location }}</li>
 
@@ -56,5 +57,11 @@
     {% endif %}
     </div>
 {% else %}
+    <p class="text-center">
+        当前没有讲座
+    </p>
+    <a class="btn btn-primary text-center" href="{% url 'lecture:create' %}">
+        添加讲座
+    </a>
 {% endif %}
 {% endblock %}
