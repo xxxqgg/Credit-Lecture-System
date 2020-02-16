@@ -5,7 +5,7 @@ from .forms import LectureForm
 from rest_framework import viewsets
 from .serializers import LectureSerializer
 from django.db import IntegrityError
-
+from random import shuffle
 
 # Create your views here.
 class LectureViewSet(viewsets.ModelViewSet):
@@ -48,8 +48,10 @@ def lecture_create_view(request):
 
 def lecture_signup_view(request, lecture_id):
     if request.user.is_anonymous:
-        return redirect('login')
+        return redirect('user:login')
     lecture = get_object_or_404(Lecture, pk=lecture_id)
+    if lecture.did_draw: # If a lecture is already drawn then we can not signup.
+        return redirect('lecture:index')
     record = DrawResult()
     record.lecture = lecture
     record.student = request.user
@@ -59,3 +61,37 @@ def lecture_signup_view(request, lecture_id):
         return redirect('lecture:index')
 
     return redirect('user:index')
+
+
+def lecture_draw_view(request, lecture_id):
+    if not request.user.is_staff:
+
+        return redirect('lecture:index')
+    lecture = get_object_or_404(Lecture,pk=lecture_id)
+    if lecture.did_draw:
+        return redirect('lecture:index')
+    results = DrawResult.objects.all().filter(lecture=lecture)
+    # If the number of student signed up for the lecture is smaller than its capacity, all students can go.
+    if len(results) <= lecture.capacity:
+        for result in results:
+            result.draw_status = DrawResult.Status.WIN
+            result.save()
+
+    # TODO: For now, all students have the same probability to get in the lecture.
+    #  We need to implement the target class logic.
+    else:
+        results = list(results)
+        shuffle(results)
+        for i in range(lecture.capacity):
+            results[i].draw_status = DrawResult.Status.WIN
+            results[i].save()
+        for i in range(lecture.capacity, len(results)): # TODO: Fix efficiency here.
+            results[i].draw_status = DrawResult.Status.MISSED
+            results[i].save()
+
+    lecture.did_draw = True
+    lecture.save()
+    return redirect('lecture:index')
+
+
+

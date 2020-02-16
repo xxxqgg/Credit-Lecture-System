@@ -33,9 +33,9 @@
                     <li class="list-group-item">
                         {% if request.user.is_staff %}
                             <div class="btn-group">
-                                <button href="" class="btn btn-primary m-auto">修改</button>
-                                <button href="" class="btn btn-danger m-auto">删除</button>
-                                <button href="" class="btn btn-info m-auto">抽选</button>
+                                <a href="#" class="btn btn-primary m-auto">修改</a>
+                                <a href="#" class="btn btn-danger m-auto">删除</a>
+                                <a href="{% url 'lecture:draw' lecture.id %}" class="btn btn-info m-auto">抽选</a>
                             </div>
                         {% else %}
                             <a href="{% url 'lecture:signup' lecture.id %}" class="btn btn-primary m-auto">报名</a>

@@ -5,6 +5,7 @@ from .views import (
     lecture_signup_view,
     detail_view,
     LectureViewSet,
+    lecture_draw_view
     )
 from rest_framework import routers
 router = routers.DefaultRouter()
@@ -16,4 +17,5 @@ urlpatterns = [
     path('<int:id>/', detail_view,name='detail'),
     path('create',lecture_create_view,name='create'),
     path('<int:lecture_id>/signup/', lecture_signup_view,name='signup'),
+    path('<int:lecture_id>/draw', lecture_draw_view, name='draw')
 ]
