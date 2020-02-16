@@ -16,7 +16,7 @@ class Lecture(models.Model):
     lecturer = models.TextField()
     lecturer_introduction = models.TextField()
     target_class = models.ManyToManyField(Class, blank=True)
-    did_drawn = models.BooleanField(blank=False, default=False)
+    did_draw = models.BooleanField(blank=False, default=False)
 
     def get_absolute_url(self):
         return reverse("lecture:detail", kwargs={"id": self.id})
@@ -27,7 +27,7 @@ class Lecture(models.Model):
     @property
     def get_number_of_selected(self):
         results = DrawResult.objects.all().filter(lecture=self)
-        if self.did_drawn:
+        if self.did_draw:
             return len(results.filter(draw_status=DrawResult.Status.WIN))
         else:
             return len(results)
