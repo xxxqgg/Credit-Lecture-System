@@ -13,7 +13,7 @@ Under construction
 - [x] User model has certain bug while accessing form the admin site. 
 Take a look at [this document](https://docs.djangoproject.com/en/2.2/topics/auth/customizing/) and fix the bugs.
 - [ ] Add lectures via file upload.
-- [ ] Admin view on Draw and draw function
+- [x] Admin view on Draw and draw function
 - [ ] Add cron job to this project to support Draw features in Lecture model
 - [x] Do authentication first before any other action.
 - [x] Add bootstrap support for this project.
