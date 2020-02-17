@@ -14,6 +14,9 @@ class Class(models.Model):
     def __str__(self):
         return str(self.grade) + "级" + self.major + self.class_number + "班"
 
+    class Meta:
+        ordering = ['grade', 'major']
+
 
 class LectureUser(AbstractUser):
     username = None
@@ -25,3 +28,6 @@ class LectureUser(AbstractUser):
 
     def __str__(self):
         return str(self.student_id)
+
+    class Meta:
+        ordering = ['student_class']

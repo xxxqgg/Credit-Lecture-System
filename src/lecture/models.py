@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 class Lecture(models.Model):
     title = models.CharField(max_length=120)
     lecture_time = models.DateTimeField()
-    draw_time = models.DateTimeField(blank=False, null=False)
+    draw_date = models.DateField(blank=False, null=False)
     introduction = models.TextField(blank=True, null=False)
     capacity = models.IntegerField()
     lecture_location = models.TextField()
@@ -17,6 +17,9 @@ class Lecture(models.Model):
     lecturer_introduction = models.TextField()
     target_class = models.ManyToManyField(Class, blank=True)
     did_draw = models.BooleanField(blank=False, default=False)
+
+    class Meta:
+        ordering = ['-lecture_time']
 
     def get_absolute_url(self):
         return reverse("lecture:detail", kwargs={"id": self.id})
@@ -42,6 +45,9 @@ class AttendanceLog(models.Model):
     def __str__(self):
         return self.lecture.title + ": " + self.student.username + ' Attend: ' + self.didAttend
 
+    class Meta:
+        ordering = ['student']
+
 
 class DrawResult(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE,unique=False,primary_key=False)
@@ -49,6 +55,7 @@ class DrawResult(models.Model):
 
     class Meta:
         unique_together = ('lecture', 'student')
+        ordering = ['lecture']
 
     class Status(models.TextChoices):
         PENDING = 'PEN',_('Pending')

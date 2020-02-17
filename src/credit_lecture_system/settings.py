@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Third party app
     'rest_framework',
+    'django_cron',
     # own app
     'lecture',
     'user',

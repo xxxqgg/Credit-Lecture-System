@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from .models import *
 from .forms import LectureForm
 from rest_framework import viewsets
 from .serializers import LectureSerializer
 from django.db import IntegrityError
 from random import shuffle
+
 
 # Create your views here.
 class LectureViewSet(viewsets.ModelViewSet):
@@ -37,7 +38,7 @@ def detail_view(request, id):
 def lecture_create_view(request):
     form = LectureForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        lecture = form.save()
         form = LectureForm()
 
     context = {
@@ -65,11 +66,18 @@ def lecture_signup_view(request, lecture_id):
 
 def lecture_draw_view(request, lecture_id):
     if not request.user.is_staff:
+        return redirect('lecture:index')
+    success = draw(lecture_id)  # TODO: do different thing if fails to draw.
+    return redirect('lecture:index')
 
-        return redirect('lecture:index')
-    lecture = get_object_or_404(Lecture,pk=lecture_id)
+
+def draw(lecture_id) -> bool:
+    try:
+        lecture = Lecture.objects.get(id=lecture_id)
+    except ObjectDoesNotExist:
+        return False
     if lecture.did_draw:
-        return redirect('lecture:index')
+        return False
     results = DrawResult.objects.all().filter(lecture=lecture)
     # If the number of student signed up for the lecture is smaller than its capacity, all students can go.
     if len(results) <= lecture.capacity:
@@ -85,13 +93,9 @@ def lecture_draw_view(request, lecture_id):
         for i in range(lecture.capacity):
             results[i].draw_status = DrawResult.Status.WIN
             results[i].save()
-        for i in range(lecture.capacity, len(results)): # TODO: Fix efficiency here.
+        for i in range(lecture.capacity, len(results)):  # TODO: Fix efficiency here.
             results[i].draw_status = DrawResult.Status.MISSED
             results[i].save()
-
     lecture.did_draw = True
     lecture.save()
-    return redirect('lecture:index')
-
-
-
+    return True
