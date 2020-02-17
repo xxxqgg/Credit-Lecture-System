@@ -19,8 +19,13 @@ class LectureViewSet(viewsets.ModelViewSet):
 
 def index_view(request):
     lectures = Lecture.objects.order_by('lecture_time')
+    selected_results = DrawResult.objects.all().filter(student=request.user)
+    selected_lectures = []
+    for result in selected_results:
+        selected_lectures.append(result.lecture)
     context = {
-        'lectures': lectures
+        'lectures': lectures,
+        'selected_lectures': selected_lectures
     }
     return render(request, 'lecture_list.html', context)
 
