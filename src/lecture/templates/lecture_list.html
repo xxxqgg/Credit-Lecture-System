@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load admin_urls %}
 {% block breadcrumb %}
     <li class="breadcrumb-item">
         <a class="nav-link" href="{% url 'lecture:index' %}">Home</a>
@@ -33,12 +34,16 @@
                     <li class="list-group-item">
                         {% if request.user.is_staff %}
                             <div class="btn-group">
-                                <a href="#" class="btn btn-primary m-auto">修改</a>
+                                <a href="{{ lecture.get_change_url }}" class="btn btn-primary m-auto">修改</a>
                                 <a href="#" class="btn btn-danger m-auto">删除</a>
                                 <a href="{% url 'lecture:draw' lecture.id %}" class="btn btn-info m-auto {% if lecture.did_draw %} disabled{% endif %}">抽选</a>
                             </div>
                         {% else %}
-                            <a href="{% url 'lecture:signup' lecture.id %}" class="btn btn-primary m-auto">报名</a>
+                            {% if selected_lectures and lecture in selected_lectures %}
+                                 <a href="{% url 'lecture:signup' lecture.id %}" class="btn btn-danger m-auto {% if lecture.did_draw %}disabled{% endif %}">退选</a>
+                            {% else %}
+                                <a href="{% url 'lecture:signup' lecture.id %}" class="btn btn-primary m-auto">报名</a>
+                            {% endif %}
                         {% endif %}
                     </li>
                 </ul>

@@ -27,6 +27,10 @@ class Lecture(models.Model):
     def __str__(self):
         return self.title
 
+    def get_change_url(self):
+        info = (self._meta.app_label, self._meta.model_name)
+        return reverse('admin:%s_%s_change' % info, args=(self.id,))
+
     @property
     def get_number_of_selected(self):
         results = DrawResult.objects.all().filter(lecture=self)
