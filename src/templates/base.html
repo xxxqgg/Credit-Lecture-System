@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>学分讲座-数学与统计学院</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
     <!-- Our Custom CSS -->
@@ -60,21 +60,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
                     <a href="#">Contact</a>
                 </li>
             </ul>
 
-            <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul>
         </nav>
 
         <!-- Page Content  -->
@@ -95,7 +84,11 @@
                         <ul class="nav navbar-nav ml-auto">
                             {% if request.user.is_authenticated %}
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="{% url 'user:index' %}">我的课程</a>
+                                    {% if request.user.is_staff %}
+                                        <a class="nav-link" href="{% url 'admin:index' %}">后台管理</a>
+                                    {% else %}
+                                        <a class="nav-link" href="{% url 'user:index' %}">我的课程</a>
+                                    {% endif %}
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{% url 'user:signout' %}">退出</a>
