@@ -56,7 +56,23 @@
         {% endautoescape %}
     {% endfor %}
     </div>
+    <div class="pagination center-block">
+    <span class="step-links">
+        {% if lectures.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ lectures.number }} of {{ lectures.paginator.num_pages }}.
+        </span>
+
+        {% if lectures.has_next %}
+            <a href="?page={{ lectures.next_page_number }}">next</a>
+            <a href="?page={{ lectures.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
     {% if request.user.is_staff %}
         <a href="create" class="btn btn-primary">Create A Lecture</a>

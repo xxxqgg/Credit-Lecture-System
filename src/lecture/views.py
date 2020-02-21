@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import *
@@ -17,8 +18,12 @@ class LectureViewSet(viewsets.ModelViewSet):
     serializer_class = LectureSerializer
 
 
+# List view of lectures
 def index_view(request):
     lectures = Lecture.objects.order_by('lecture_time')
+    paginator = Paginator(lectures, 6) # Show 12 lectures per page
+    page_number = request.GET.get('page')
+    lectures = paginator.get_page(page_number)
     selected_results = DrawResult.objects.all().filter(student=request.user)
     selected_lectures = []
     for result in selected_results:
