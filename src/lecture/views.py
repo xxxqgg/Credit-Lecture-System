@@ -24,10 +24,11 @@ def index_view(request):
     paginator = Paginator(lectures, 6) # Show 12 lectures per page
     page_number = request.GET.get('page')
     lectures = paginator.get_page(page_number)
-    selected_results = DrawResult.objects.all().filter(student=request.user)
     selected_lectures = []
-    for result in selected_results:
-        selected_lectures.append(result.lecture)
+    if request.user.is_authenticated:
+        selected_results = DrawResult.objects.all().filter(student=request.user)
+        for result in selected_results:
+            selected_lectures.append(result.lecture)
     context = {
         'lectures': lectures,
         'selected_lectures': selected_lectures
