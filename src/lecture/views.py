@@ -9,15 +9,6 @@ from django.db import IntegrityError
 from random import shuffle
 
 
-# Create your views here.
-class LectureViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Lecture.objects.all().order_by('-lecture_time')
-    serializer_class = LectureSerializer
-
-
 # List view of lectures
 def index_view(request):
     lectures = Lecture.objects.order_by('lecture_time')
@@ -110,3 +101,11 @@ def draw(lecture_id) -> bool:
     lecture.did_draw = True
     lecture.save()
     return True
+
+
+class LectureViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Lecture.objects.all().order_by('lecture_time')
+    serializer_class = LectureSerializer

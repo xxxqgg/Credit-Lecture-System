@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from lecture.views import LectureViewSet
+from user.views import ClassViewSet
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register('lectures', LectureViewSet)
+router.register('class', ClassViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('lecture.urls')),
-    path('user/',include('user.urls'))
-
+    path('user/',include('user.urls')),
+    path('api/', include(router.urls), name='api')
 ]

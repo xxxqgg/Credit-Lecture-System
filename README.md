@@ -21,3 +21,4 @@ Take a look at [this document](https://docs.djangoproject.com/en/2.2/topics/auth
 - [ ] Enable importing User and other model with excel files.
 - [ ] Enable WeChat mini-app login. OpenID, Session ID, etc.
 - [ ] Add tests and ci support.
+- [ ] Add authentication for rest framework.

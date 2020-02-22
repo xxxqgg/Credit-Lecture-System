@@ -1,7 +1,9 @@
 from django.shortcuts import render, HttpResponse,redirect
 from django.contrib.auth import logout, authenticate, login
 from lecture.models import DrawResult
-
+from rest_framework import viewsets
+from .models import Class
+from .serializers import ClassSerializer
 
 # Create your views here.
 def index_view(request):
@@ -36,3 +38,11 @@ def login_view(request):
             return redirect('user:login')
 
     return render(request,'login_page.html')
+
+
+class ClassViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Class.objects.all().order_by('lecture_time')
+    serializer_class = ClassSerializer
