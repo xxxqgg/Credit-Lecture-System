@@ -29,7 +29,6 @@ class LectureUser(AbstractUser):
     # WeChat OpenID. We temporarily set the maximum length of it to 128
     openID = models.CharField(null=True, max_length=128)
 
-
     def __str__(self):
         return str(self.student_id)
 
